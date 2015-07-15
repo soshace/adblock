@@ -1,42 +1,45 @@
 'use strict';
 
-console.log('Popup: show msg');
+function reloadPage(){
+	chrome.tabs.getSelected(null, function(tab) {
+		var code = 'window.location.reload();';
+		chrome.tabs.executeScript(tab.id, {code: code});
+	})
+}
 
 function enable(e) {
-  console.log("set page color click");
-  
   chrome.tabs.getSelected(null, function(tab) {
     chrome.tabs.sendMessage(
       tab.id, 
       {type: "enableYouTubePlugin"}, 
       function(response) {
-        console.log(response.farewell);
       }
     );
   });
-  var enableElem = document.getElementById("enable"),
+	var enableElem = document.getElementById("enable"),
 	disableElem = document.getElementById("disable");
-  addClass(enableElem, "active");
-  removeClass(disableElem, "active");
+	addClass(enableElem, "active");
+	removeClass(disableElem, "active");
+	reloadPage();
+	window.close();
 }
 
 function disable(e) {
-  console.log("set page color click");
-  
   chrome.tabs.getSelected(null, function(tab) {
     chrome.tabs.sendMessage(
       tab.id, 
       {type: "disableYouTubePlugin"}, 
       function(response) {
-        console.log(response.farewell);
       }
     );
   });
   
-   var enableElem = document.getElementById("enable"),
+	var enableElem = document.getElementById("enable"),
 	disableElem = document.getElementById("disable");
-  addClass(disableElem, "active");
-  removeClass(enableElem, "active");
+	addClass(disableElem, "active");
+	removeClass(enableElem, "active");
+	reloadPage();
+	window.close();
 }
 
 function addClass(o, c){
@@ -51,12 +54,8 @@ function removeClass(o, c){
 }
 
 window.onload = function() {
-    var port = chrome.extension.connect({ name: "color-divs-port" });
 	var enableElem = document.getElementById("enable"),
 	disableElem = document.getElementById("disable");
-	console.log('Popup: show msg');
-	enableElem.addEventListener("click", enable);
-	disableElem.addEventListener("click", disable);
 	chrome.storage.sync.get("youtubePluginEnable", function(items){
 		if(items.youtubePluginEnable)
 		{
@@ -68,4 +67,6 @@ window.onload = function() {
 			removeClass(enableElem, "active");
 		}
 	})
+	enableElem.addEventListener("click", enable);
+	disableElem.addEventListener("click", disable);
 }

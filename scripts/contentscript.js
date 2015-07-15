@@ -21,32 +21,11 @@ function skipVideoAd() {
 }
 
 function hideOverlayAd() {
-
-	var overlayAdContainer = document.getElementsByClassName('ad-container');
-	for (var i=0; i<overlayAdContainer.length; i++)
-	{	
-		if (overlayAdContainer[i] && overlayAdContainer[i].style.display !== 'none') {
-			adbYtLog('hide overlay ad');
-			overlayAdContainer[i].style.display = 'none';
-		}
-	}
-	overlayAdContainer = document.getElementsByClassName('ad-div');
-	for (var i=0; i<overlayAdContainer.length; i++)
-	{	
-		if (overlayAdContainer[i] && overlayAdContainer[i].style.display !== 'none') {
-			adbYtLog('hide overlay ad');
-			overlayAdContainer[i].style.display = 'none';
-		}
-	}
-	overlayAdContainer = document.getElementsByClassName('ad-container-single-media-element-annotations');
-	for (var i=0; i<overlayAdContainer.length; i++)
-	{	
-		if (overlayAdContainer[i] && overlayAdContainer[i].style.display !== 'none') {
-			adbYtLog('hide overlay ad');
-			overlayAdContainer[i].style.display = 'none';
-		}
-	}
-	overlayAdContainer = document.getElementsByTagName('iframe');
+	var overlayAdContainer, buf1, buf2;
+	buf1= [].slice.call(document.getElementsByClassName('ad-container'));
+	buf2 = buf1.concat([].slice.call(document.getElementsByClassName('ad-div')));
+	buf1 = buf2.concat([].slice.call(document.getElementsByClassName('ad-container-single-media-element-annotations')));
+	overlayAdContainer = buf1.concat(document.getElementById('google_companion_ad_div'));
 	for (var i=0; i<overlayAdContainer.length; i++)
 	{	
 		if (overlayAdContainer[i] && overlayAdContainer[i].style.display !== 'none') {
@@ -59,7 +38,6 @@ function hideOverlayAd() {
 function clearAds() {
 	chrome.storage.sync.get("youtubePluginEnable", function(items){
 		var enable = items.youtubePluginEnable;
-		console.log(enable);
 		if(enable)
 		{
 			skipVideoAd();
@@ -68,47 +46,13 @@ function clearAds() {
 	});
 }
 
-function DOMSTlistener(e) {
-
-	adbYtLog('DOM event listener triggered');
-
-	if (e.target.innerHTML.length > 0) {
-		clearAds();
-	}
-}
-
-function init() {
-
-	var videoAdContainer = document.getElementsByClassName('video-ads html5-stop-propagation')[0];
-
-	if (videoAdContainer) {
-
-		adbYtLog('inited');
-		player.removeEventListener('DOMSubtreeModified', init);
-		videoAdContainer.addEventListener('DOMSubtreeModified', DOMSTlistener);
-	}
-}
-
-
-if (/https?:\/\/(\w*.)?youtube.com/i.test(window.location.href.toLowerCase())) {
-
-	/*if (isChrome) {
-
-		player.addEventListener('DOMSubtreeModified', init);
-	} else {
-		clearAds();
-	}*/
-}
-
 chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
     switch(message.type) {
         case "enableYouTubePlugin":
-			console.log("enable");
 			chrome.storage.sync.set({ "youtubePluginEnable": true });
 			clearAds();
         break;
 		case "disableYouTubePlugin":
-			console.log("disable");
 			chrome.storage.sync.set({ "youtubePluginEnable": false });
         break;
     }
