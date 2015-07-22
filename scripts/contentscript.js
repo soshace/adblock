@@ -5,8 +5,8 @@ $(function () {
         $ads = $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div');
 
     function hideVideoAds() {
-        if (document.getElementsByClassName('videoAdUi').length > 0) {
-            document.getElementsByClassName('video-stream html5-main-video')[0].src = '';
+        if ($('.videoAdUi').length) {
+            $('.video-stream.html5-main-video').attr('src', '');
         }
     }
 
@@ -45,6 +45,8 @@ $(function () {
         }
     });
 
-    hideVideoIndex = setInterval(hideAds, 300);
+    hideVideoIndex = setInterval(function(){
+        clearAds();
+    }, 300);
     clearAds();
 });
