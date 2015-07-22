@@ -1,23 +1,17 @@
 'use strict';
 
 $(function () {
-    var $ads = $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div');
+    var hideVideoIndex,
+        $ads = $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div');
 
     function hideVideoAds() {
-        hideVideoAds.timerIndex = setInterval(function () {
-            var $videoAd = $('.video-stream .html5-main-video');
-
-            if ($('.videoAdUi').length) {
-                if ($videoAd.length) {
-                    $videoAd.attr('src', '');
-                    window.clearInterval(hideVideoAds.timerIndex);
-                }
-            }
-        }, 150);
+        if (document.getElementsByClassName('videoAdUi').length > 0) {
+            document.getElementsByClassName('video-stream html5-main-video')[0].src = '';
+        }
     }
 
     function showVideoAds() {
-        window.clearInterval(hideVideoAds.timerIndex);
+        window.clearInterval(hideVideoIndex);
     }
 
     function hideAds() {
@@ -51,7 +45,6 @@ $(function () {
         }
     });
 
-    function onYouTubeIframeAPIReady() {
-        clearAds();
-    }
+    hideVideoIndex = setInterval(hideAds, 300);
+    clearAds();
 });
