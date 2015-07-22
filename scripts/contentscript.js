@@ -3,19 +3,31 @@
 $(function () {
     var $ads = $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div');
 
-    function skipVideoAd() {
-        if (document.getElementsByClassName('videoAdUi').length > 0) {
-            document.getElementsByClassName('video-stream html5-main-video')[0].src = '';
-        }
+    function hideVideoAds() {
+        hideVideoAds.timerIndex = setInterval(function () {
+            var $videoAd = $('.video-stream .html5-main-video');
+
+            if ($('.videoAdUi').length) {
+                if ($videoAd.length) {
+                    $videoAd.attr('src', '');
+                    window.clearInterval(hideVideoAds.timerIndex);
+                }
+            }
+        }, 150);
+    }
+
+    function showVideoAds() {
+        window.clearInterval(hideVideoAds.timerIndex);
     }
 
     function hideAds() {
         $ads.hide();
-        skipVideoAd();
+        hideVideoAds();
     }
 
     function showAds() {
         $ads.show();
+        showVideoAds();
     }
 
     function clearAds() {
