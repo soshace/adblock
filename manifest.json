@@ -10,8 +10,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "scripts/chromereload.js",
-      "scripts/background.js"
+      "scripts/chromereload.js"
     ]
   },
   "browser_action": {
@@ -28,6 +27,7 @@
         "*://*/*"
       ],
       "js": [
+        "scripts/jquery.js",
         "scripts/contentscript.js"
       ],
       "run_at": "document_end",
