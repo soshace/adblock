@@ -26,7 +26,7 @@
     function clearAds() {
         chrome.storage.sync.get("youtubePluginEnable", function (items) {
             if (items.youtubePluginEnable) {
-                hideVideoIndex = setInterval(hideAds, 500);
+                hideVideoIndex = setInterval(hideAds, 1000);
             }
         });
     }
@@ -45,4 +45,6 @@
     });
 
     clearAds();
+    setTimeout(clearAds, 300);
+    setTimeout(clearAds, 500);
 })();
