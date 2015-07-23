@@ -3,23 +3,23 @@
 (function () {
     var hideVideoIndex;
 
-    function getAds() {
-        return $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div, .adDisplay');
-    }
-
     function hideVideoAds() {
         if (document.getElementsByClassName('videoAdUi').length > 0) {
             document.getElementsByClassName('video-stream html5-main-video')[0].src = '';
         }
     }
 
+    function gerAds(){
+        return $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div, .adDisplay');
+    }
+
     function hideAds() {
-        getAds().hide();
+        gerAds().hide();
         hideVideoAds();
     }
 
     function showAds() {
-        $ads.show();
+        gerAds().show();
         window.clearInterval(hideVideoIndex);
     }
 
