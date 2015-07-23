@@ -10,10 +10,6 @@
         }
     }
 
-    function showVideoAds() {
-        window.clearInterval(hideVideoIndex);
-    }
-
     function hideAds() {
         $ads.hide();
         hideVideoAds();
@@ -21,27 +17,22 @@
 
     function showAds() {
         $ads.show();
-        showVideoAds();
+        window.clearInterval(hideVideoIndex);
     }
 
     function clearAds() {
         chrome.storage.sync.get("youtubePluginEnable", function (items) {
             if (items.youtubePluginEnable) {
-                hideAds();
+                hideVideoIndex = setInterval(hideAds, 300);
             }
         });
-    }
-
-    function startClearingAds() {
-        clearAds();
-        hideVideoIndex = setInterval(clearAds, 300);
     }
 
     chrome.extension.onMessage.addListener(function (message) {
         switch (message.type) {
             case "enableYouTubePlugin":
                 chrome.storage.sync.set({"youtubePluginEnable": true});
-                startClearingAds();
+                clearAds();
                 break;
             case "disableYouTubePlugin":
                 chrome.storage.sync.set({"youtubePluginEnable": false});
@@ -50,5 +41,5 @@
         }
     });
 
-    startClearingAds();
+    clearAds();
 })();
