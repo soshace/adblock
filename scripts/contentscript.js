@@ -1,8 +1,11 @@
 'use strict';
 
 (function () {
-    var hideVideoIndex,
-        $ads = $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div, .adDisplay');
+    var hideVideoIndex;
+
+    function getAds() {
+        return $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div, .adDisplay');
+    }
 
     function hideVideoAds() {
         if (document.getElementsByClassName('videoAdUi').length > 0) {
@@ -11,7 +14,7 @@
     }
 
     function hideAds() {
-        $ads.hide();
+        getAds().hide();
         hideVideoAds();
     }
 
