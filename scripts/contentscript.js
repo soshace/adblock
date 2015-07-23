@@ -32,11 +32,16 @@
         });
     }
 
+    function startClearingAds() {
+        clearAds();
+        hideVideoIndex = setInterval(clearAds, 300);
+    }
+
     chrome.extension.onMessage.addListener(function (message) {
         switch (message.type) {
             case "enableYouTubePlugin":
                 chrome.storage.sync.set({"youtubePluginEnable": true});
-                hideAds();
+                startClearingAds();
                 break;
             case "disableYouTubePlugin":
                 chrome.storage.sync.set({"youtubePluginEnable": false});
@@ -45,8 +50,5 @@
         }
     });
 
-    hideVideoIndex = setInterval(function(){
-        clearAds();
-    }, 300);
-    clearAds();
+    startClearingAds();
 })();
