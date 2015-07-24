@@ -10,7 +10,7 @@
     }
 
     function gerAds(){
-        return $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div, .adDisplay, .google_companion_ad_div');
+        return $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div, .adDisplay, #google_companion_ad_div');
     }
 
     function hideAds() {
@@ -26,8 +26,9 @@
     function clearAds() {
         chrome.storage.sync.get("youtubePluginEnable", function (items) {
             if (items.youtubePluginEnable) {
-                hideAds();
-                $(hideAds);
+                $(hideAds, 50);
+                setTimeout(hideAds, 100);
+                setTimeout(hideAds, 150);
                 setTimeout(hideAds, 300);
                 setTimeout(hideAds, 500);
                 hideVideoIndex = setInterval(hideAds, 1000);
