@@ -10,7 +10,7 @@
     }
 
     function gerAds(){
-        return $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div, .adDisplay');
+        return $('.ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div, .adDisplay, .google_companion_ad_div');
     }
 
     function hideAds() {
@@ -27,6 +27,7 @@
         chrome.storage.sync.get("youtubePluginEnable", function (items) {
             if (items.youtubePluginEnable) {
                 hideAds();
+                $(hideAds);
                 setTimeout(hideAds, 300);
                 setTimeout(hideAds, 500);
                 hideVideoIndex = setInterval(hideAds, 1000);
