@@ -7,7 +7,8 @@ $(function () {
             $('.adsense-ads'),
             $('.adwords-ads'),
             $('.twitter-ads'),
-            $('.facebook-ads')
+            $('.facebook-ads'),
+            $('.bing-ads')
         ]
         ;
 

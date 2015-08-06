@@ -6,7 +6,8 @@
         adsense: ":regex(id,^(google_ads|aswift))",
         adwords: ":regex(id,^bottomads$|^taw$|^rhs$)",
         twitter: ":regex(role,^presentation$)",
-        facebook: ":regex(class,.*cardRightCol.*)"
+        facebook: ":regex(class,.*cardRightCol.*)",
+        bing: ":regex(class,^b_ad$)"
     };
 
     var hideVideoIndex;
