@@ -28,6 +28,7 @@
       ],
       "js": [
         "scripts/jquery.js",
+        "scripts/jquery-regex.js",
         "scripts/contentscript.js"
       ],
       "run_at": "document_end",

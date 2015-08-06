@@ -10,16 +10,42 @@ body {
     cursor: pointer;
 }
 
-.hide-ads:after {
-    content: 'hide ads';
-}
+/*.hide-ads.youtube-ads:after {*/
+    /*content: 'hide youtube ads';*/
+/*}*/
 
-.hide-ads.active {
+.hide-ads.youtube-ads.active {
     background: #7d7d7d;
     color: #fff;
 }
 
-.hide-ads.active:after {
-    content: 'show ads';
+/*.hide-ads.youtube-ads.active:after {*/
+    /*content: 'show youtube ads';*/
 
+/*}*/
+
+/*.hide-ads.adsense-ads:after {*/
+    /*content: 'hide adsense ads';*/
+/*}*/
+
+.hide-ads.adsense-ads.active {
+    background: #7d7d7d;
+    color: #fff;
 }
+
+/*.hide-ads.adsense-ads.active:after {*/
+    /*content: 'show adsense ads';*/
+/*}*/
+
+/*.hide-ads.adwords-ads:after {*/
+    /*content: 'hide adwords ads';*/
+/*}*/
+
+.hide-ads.adwords-ads.active {
+    background: #7d7d7d;
+    color: #fff;
+}
+
+/*.hide-ads.adwords-ads.active:after {*/
+    /*content: 'show adwords ads';*/
+/*}*/
