@@ -39,14 +39,13 @@
         for (var i=0; i < elems.length; i++) {
             var elem = $(elems[i]);
             elem.show();
-            if (elem.width() == elem.parent().width() && elem.height() == elem.parent().height()) {
-                elem.parent().show()
-            }
+            elem.parent().show()
         }
         window.clearInterval(hideVideoIndex);
     }
 
     function clearAds(selector) {
+        console.log(selector);
         chrome.storage.sync.get("youtubePluginEnable", function (items) {
             if (items.youtubePluginEnable) {
                 $(hideAds, 50, selector);
@@ -74,6 +73,16 @@
 
     chrome.extension.onMessage.addListener(function (message) {
         syncSet(message.type);
+    });
+
+    $(document).ready(function () {
+        chrome.storage.local.get('ads', function (result) {
+            for (var prop in result['ads']) {
+                if (result['ads'][prop]) {
+                    hideAds(prop);
+                }
+            }
+        });
     });
 
     clearAds();

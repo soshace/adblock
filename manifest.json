@@ -29,7 +29,8 @@
       "js": [
         "scripts/jquery.js",
         "scripts/jquery-regex.js",
-        "scripts/contentscript.js"
+        "scripts/contentscript.js",
+        "scripts/options.js"
       ],
       "run_at": "document_end",
       "all_frames": false
@@ -40,5 +41,7 @@
 	"<all_urls>",
     "management",
 	"storage"
-  ]
+  ],
+  "options_page": "options.html"
+
 }
