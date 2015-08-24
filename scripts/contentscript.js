@@ -7,7 +7,8 @@
         adwords: ":regex(id,^bottomads$|^taw$|^rhs$)",
         twitter: ":regex(role,^presentation$)",
         facebook: ":regex(class,.*cardRightCol.*)",
-        bing: ":regex(class,^b_ad$)"
+        bing: ":regex(class,^b_ad$)",
+        doubleclick: ":regex(class,^GoogleActiveViewClass$)"
     };
 
     var hideVideoIndex;
