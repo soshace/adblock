@@ -2,7 +2,8 @@
 
 $(function () {
     var bg = chrome.extension.getBackgroundPage(),
-        $optionsButton = $('#optButton')
+        $optionsButton = $('#optButton'),
+        $toggleButton = $('#hideAdBtn')
         //buttons = [
         //    $('.youtube-ads'),
         //    $('.adsense-ads'),
@@ -48,6 +49,11 @@ $(function () {
         chrome.tabs.create({ url: "options.html" });
     });
 
+    $toggleButton.on('click', function () {
+        chrome.tabs.getSelected(null, function (tab) {
+            chrome.tabs.sendMessage(tab.id, {type: "toggleState"});
+        });
+    });
     //for (var i = 0; i < buttons.length; i++) {
     //    buttons[i].on('click', function () {
     //        var $this = $(this);

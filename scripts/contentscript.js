@@ -8,7 +8,7 @@
         twitter: ":regex(role,^presentation$)",
         facebook: ":regex(class,.*cardRightCol.*)",
         bing: ":regex(class,^b_ad$)",
-        doubleclick: ":regex(class,^GoogleActiveViewClass$)"
+        doubleclick: ":regex(class,.*GoogleActiveViewClass.*)"
     };
 
     var hideVideoIndex;
@@ -19,13 +19,13 @@
         }
     }
 
-    function gerAds(selector){
+    function gerAds(selector) {
         return $(AD_SELECTORS[selector]);
     }
 
     function hideAds(selector) {
         var elems = gerAds(selector);
-        for (var i=0; i < elems.length; i++) {
+        for (var i = 0; i < elems.length; i++) {
             var elem = $(elems[i]);
             elem.hide();
             if (elem.width() == elem.parent().width() && elem.height() == elem.parent().height()) {
@@ -37,7 +37,7 @@
 
     function showAds(selector) {
         var elems = gerAds(selector);
-        for (var i=0; i < elems.length; i++) {
+        for (var i = 0; i < elems.length; i++) {
             var elem = $(elems[i]);
             elem.show();
             elem.parent().show()
@@ -60,6 +60,10 @@
     }
 
     function syncSet(type) {
+        if (type == 'toggleState') {
+            togleAds();
+            return
+        }
         var state = type.split('-')[0],
             ad = type.split('-')[1],
             enable = (state == 'enable')
@@ -77,14 +81,37 @@
     });
 
     $(document).ready(function () {
-        chrome.storage.local.get('ads', function (result) {
-            for (var prop in result['ads']) {
-                if (result['ads'][prop]) {
-                    hideAds(prop);
-                }
-            }
-        });
+        //togleAds();
+        chrome.storage.local.set({'adsBlocked': true}, function () {});
     });
+
+    function togleAds() {
+        chrome.storage.local.get('ads', function (result) {
+            var action;
+            getState(function (blockAd) {
+                if (blockAd) {
+                    action = hideAds;
+                } else {
+                    action = showAds;
+                }
+                chrome.storage.local.set({'adsBlocked': !blockAd}, function () {});
+                for (var prop in result['ads']) {
+                    if (result['ads'][prop]) {
+                        console.log(prop);
+                        action(prop);
+                    }
+                }
+            });
+        });
+
+    }
+
+    function getState(callback) {
+        chrome.storage.local.get('adsBlocked', function (result) {
+            console.log(result['adsBlocked']);
+            callback(result['adsBlocked']);
+        });
+    }
 
     clearAds();
 })();
