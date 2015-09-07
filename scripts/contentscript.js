@@ -63,6 +63,12 @@
         if (type == 'toggleState') {
             togleAds();
             return
+        } else if (type == 'hideAds') {
+            toggleAds(true);
+            return
+        } else if (type == 'showAds') {
+            toggleAds(false);
+            return
         }
         var state = type.split('-')[0],
             ad = type.split('-')[1],
@@ -82,7 +88,8 @@
 
     $(document).ready(function () {
         //togleAds();
-        chrome.storage.local.set({'adsBlocked': true}, function () {});
+        chrome.storage.local.set({'adsBlocked': true}, function () {
+        });
     });
 
     function togleAds() {
@@ -94,7 +101,8 @@
                 } else {
                     action = showAds;
                 }
-                chrome.storage.local.set({'adsBlocked': !blockAd}, function () {});
+                chrome.storage.local.set({'adsBlocked': !blockAd}, function () {
+                });
                 for (var prop in result['ads']) {
                     if (result['ads'][prop]) {
                         console.log(prop);
@@ -104,6 +112,25 @@
             });
         });
 
+    }
+
+    function toggleAds(hide) {
+        chrome.storage.local.get('ads', function (result) {
+            var action;
+            if (hide) {
+                action = hideAds;
+            } else {
+                action = showAds;
+            }
+            chrome.storage.local.set({'adsBlocked': !hide}, function () {
+            });
+            for (var prop in result['ads']) {
+                if (result['ads'][prop]) {
+                    console.log(prop);
+                    action(prop);
+                }
+            }
+        });
     }
 
     function getState(callback) {

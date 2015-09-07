@@ -3,15 +3,8 @@
 $(function () {
     var bg = chrome.extension.getBackgroundPage(),
         $optionsButton = $('#optButton'),
-        $toggleButton = $('#hideAdBtn')
-        //buttons = [
-        //    $('.youtube-ads'),
-        //    $('.adsense-ads'),
-        //    $('.adwords-ads'),
-        //    $('.twitter-ads'),
-        //    $('.facebook-ads'),
-        //    $('.bing-ads')
-        //]
+        $toggleButton = $('#hideAdBtn'),
+        $toggleCheckbox = $('#toggleCheckbox')
         ;
 
     function activateEnableTab(ad) {
@@ -54,11 +47,17 @@ $(function () {
             chrome.tabs.sendMessage(tab.id, {type: "toggleState"});
         });
     });
-    //for (var i = 0; i < buttons.length; i++) {
-    //    buttons[i].on('click', function () {
-    //        var $this = $(this);
-    //        toggleState($this);
-    //    });
-    //}
+    $toggleCheckbox.on('click', function(event) {
+        var elem = this;
+        var sel = window.getSelection();
+        chrome.tabs.getSelected(null, function (tab) {
+            if ($(elem).is(':checked')) {
+                chrome.tabs.sendMessage(tab.id, {type: "hideAds"});
 
+            } else {
+                chrome.tabs.sendMessage(tab.id, {type: "showAds"});
+            }
+        });
+        sel.removeAllRanges();
+    })
 });

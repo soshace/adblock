@@ -10,42 +10,57 @@ body {
     cursor: pointer;
 }
 
-/*.hide-ads.youtube-ads:after {*/
-    /*content: 'hide youtube ads';*/
-/*}*/
-
 .hide-ads.youtube-ads.active {
     background: #7d7d7d;
     color: #fff;
 }
-
-/*.hide-ads.youtube-ads.active:after {*/
-    /*content: 'show youtube ads';*/
-
-/*}*/
-
-/*.hide-ads.adsense-ads:after {*/
-    /*content: 'hide adsense ads';*/
-/*}*/
 
 .hide-ads.adsense-ads.active {
     background: #7d7d7d;
     color: #fff;
 }
 
-/*.hide-ads.adsense-ads.active:after {*/
-    /*content: 'show adsense ads';*/
-/*}*/
-
-/*.hide-ads.adwords-ads:after {*/
-    /*content: 'hide adwords ads';*/
-/*}*/
-
 .hide-ads.adwords-ads.active {
     background: #7d7d7d;
     color: #fff;
 }
 
-/*.hide-ads.adwords-ads.active:after {*/
-    /*content: 'show adwords ads';*/
-/*}*/
+.toggle-button
+{
+    display:none;
+}
+
+.toggle-button + label span
+{
+    text-align:center;
+    padding:0.25em 1em;
+    cursor: pointer;
+}
+
+.toggle-button + label span.off
+{
+    background:#c00;
+    color:#fff;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+}
+
+.toggle-button + label span.on
+{
+    background:#999;
+    color:#666;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+}
+
+.toggle-button:checked + label span.off
+{
+    background:#999;
+    color:#666;
+}
+
+.toggle-button:checked + label span.on
+{
+    background:#0c0;
+    color:#fff;
+}
