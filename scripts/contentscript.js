@@ -9,7 +9,8 @@
         facebook: ":regex(class,.*cardRightCol.*)",
         bing: ":regex(class,^b_ad$)",
         doubleclick: ":regex(class,.*GoogleActiveViewClass.*)"
-    };
+    },
+        checkInterval;
 
     var hideVideoIndex;
 
@@ -86,12 +87,30 @@
         syncSet(message.type);
     });
 
+    checkAd();
     $(document).ready(function () {
         //togleAds();
-        chrome.storage.local.set({'adsBlocked': true}, function () {
-        });
+        chrome.storage.local.set({'adsBlocked': true}, function () {});
+        setTimeout(function () {
+            clearInterval(checkInterval);
+        }, 15000)
+
     });
 
+    function checkAd() {
+        var state, isChecked;
+        checkInterval = setInterval(function () {
+            chrome.storage.local.get('state', function (result) {
+                state = result['state'];
+                isChecked = (state === 'on');
+                if (isChecked) {
+                    toggleAds(true);
+                } else {
+                    toggleAds(false);
+                }
+            });
+        }, 500);
+    }
     function togleAds() {
         chrome.storage.local.get('ads', function (result) {
             var action;
@@ -105,7 +124,6 @@
                 });
                 for (var prop in result['ads']) {
                     if (result['ads'][prop]) {
-                        console.log(prop);
                         action(prop);
                     }
                 }
@@ -126,7 +144,6 @@
             });
             for (var prop in result['ads']) {
                 if (result['ads'][prop]) {
-                    console.log(prop);
                     action(prop);
                 }
             }
@@ -135,7 +152,6 @@
 
     function getState(callback) {
         chrome.storage.local.get('adsBlocked', function (result) {
-            console.log(result['adsBlocked']);
             callback(result['adsBlocked']);
         });
     }

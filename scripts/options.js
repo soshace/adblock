@@ -17,8 +17,6 @@ $(function(){
 
         adObject[adName] = $(this).prop('checked');
         chrome.storage.local.set({'ads': adObject}, function () {});
-
-        console.log(adObject);
     }
 
 

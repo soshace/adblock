@@ -7,6 +7,33 @@ $(function () {
         $toggleCheckbox = $('#toggleCheckbox')
         ;
 
+    restoreState($toggleCheckbox);
+    //chrome.tabs.getSelected(null, function (tab) {
+    //    chrome.tabs.sendMessage(tab.id, {type: "popupOpen"});
+    //});
+
+    function saveState(state) {
+        chrome.storage.local.set({'state': state}, function () {});
+    }
+
+    function restoreState($elem) {
+        var state, isChecked;
+        chrome.storage.local.get('state', function(result) {
+            chrome.extension.getBackgroundPage().console.log(result);
+            state = result['state'];
+            chrome.extension.getBackgroundPage().console.log(state);
+            isChecked = (state === 'on');
+            chrome.tabs.getSelected(null, function (tab) {
+                if (isChecked) {
+                    chrome.tabs.sendMessage(tab.id, {type: "hideAds"});
+                } else {
+                    chrome.tabs.sendMessage(tab.id, {type: "showAds"});
+                }
+            });
+            $elem.prop('checked', isChecked);
+        });
+    }
+
     function activateEnableTab(ad) {
         var elem = $('[data="' + ad + '"]').eq(0);
         elem.addClass('active');
@@ -53,11 +80,13 @@ $(function () {
         chrome.tabs.getSelected(null, function (tab) {
             if ($(elem).is(':checked')) {
                 chrome.tabs.sendMessage(tab.id, {type: "hideAds"});
-
+                saveState('on');
             } else {
                 chrome.tabs.sendMessage(tab.id, {type: "showAds"});
+                saveState('off');
             }
         });
         sel.removeAllRanges();
+        //alert(restoreState($toggleCheckbox));
     })
 });
