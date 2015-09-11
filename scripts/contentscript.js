@@ -114,8 +114,11 @@
     }
 
     //delete ads on any subtree modification
-    document.addEventListener('DOMSubtreeModified', function () {
-        checkAd();
+    document.addEventListener('DOMSubtreeModified', function ( mutationEvent ) {
+        $.each(AD_SELECTORS, function(index, item){
+            if ($(mutationEvent.target).is(item))
+                checkAd();
+        });
     });
 
     document.addEventListener('DOMContentLoaded', function () {
