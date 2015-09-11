@@ -2,7 +2,7 @@
 
 (function () {
     var AD_SELECTORS = {
-            youtube: ".ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div, .adDisplay, #google_companion_ad_div",
+            youtube: ".ad-container, .ad-div, .ad-container-single-media-element-annotations, .html5-ad-progress-list, .google_companion_ad_div, .adDisplay, #google_companion_ad_div, .ytp-ad-progress-list",
             adsense: ":regex(id,^(google_ads|aswift))",
             adwords: ":regex(id,^bottomads$|^taw$|^rhs$)",
             twitter: ":regex(role,^presentation$)",
