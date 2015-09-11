@@ -3,7 +3,6 @@
 $(function () {
     var bg = chrome.extension.getBackgroundPage(),
         $optionsButton = $('#optButton'),
-        $toggleButton = $('#hideAdBtn'),
         $toggleCheckbox = $('#toggleCheckbox')
         ;
 
@@ -69,11 +68,6 @@ $(function () {
         chrome.tabs.create({ url: "options.html" });
     });
 
-    $toggleButton.on('click', function () {
-        chrome.tabs.getSelected(null, function (tab) {
-            chrome.tabs.sendMessage(tab.id, {type: "toggleState"});
-        });
-    });
     $toggleCheckbox.on('click', function(event) {
         var elem = this;
         var sel = window.getSelection();
