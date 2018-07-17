@@ -17,3 +17,5 @@
 <div>
     <img src="http://dl1.joxi.net/drive/0005/2943/342911/150714/9ec6d70f79.jpg"/>
 </div>
+
+Network for professionals [Soshace](https://soshace.com)
